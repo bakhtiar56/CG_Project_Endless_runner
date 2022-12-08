@@ -56,10 +56,13 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\ModelAnimations\Supercyan Character Pack Free Sample\Scripts\DemoFree.cs" />
     <Compile Include="Assets\ModelAnimations\Supercyan Character Pack Free Sample\Scripts\SimpleSampleCharacterControl.cs" />
+    <Compile Include="Assets\Scripts\TileManager.cs" />
+    <Compile Include="Assets\Scripts\CoinRotate.cs" />
     <Compile Include="Assets\ModelAnimations\Supercyan Character Pack Free Sample\Scripts\FreeCameraLogic.cs" />
   </ItemGroup>
   <ItemGroup>

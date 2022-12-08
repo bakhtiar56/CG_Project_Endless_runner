@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     private CharacterController controller;
@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10;
     public float gravity = -20;
 
+    //Score System
+    public static int currentScore;
+    public Text uiScore;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -30,27 +34,35 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+        //Score System
+        uiScore.text = "Score " + currentScore.ToString();
+
+
 
         //Lane 
-        if(Input.GetKeyDown(KeyCode.LeftArrow)) 
+        if(Input.GetKeyDown(KeyCode.RightArrow)) 
         {
-             if(desireLane==1){
-                desireLane=0;
+             if(desireLane==2){
+                desireLane=1;
             }
             else if(desireLane ==0) //two press 
                 {desireLane +=1;}
+            else if (desireLane == 1) //two press 
+            { desireLane += 1; }
             else if(desireLane ==-1) //two press 
                 {desireLane +=1;}
             else if (desireLane == -2) //two press 
             { desireLane += 1; }
+            else if (desireLane == -3) //two press 
+            { desireLane += 1; }
 
 
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             // if(desireLane <1) //two press 
             //     desireLane -= 1;
-             if(desireLane==-2){
+             if(desireLane==-3){
                 desireLane=0;
             }
        
@@ -59,7 +71,11 @@ public class PlayerController : MonoBehaviour
 
                    else if(desireLane ==1) //two press 
                 {desireLane -=1;}
+            else if (desireLane == 2) //two press 
+            { desireLane -= 1; }
             else if (desireLane == -1) //two press 
+            { desireLane -= 1; }
+            else if (desireLane == -2) //two press 
             { desireLane -= 1; }
 
 
@@ -74,10 +90,10 @@ public class PlayerController : MonoBehaviour
 
         Vector3 targetPosition = transform.position;
          targetPosition.x = desireLane;
-         transform.position=targetPosition;
-
-         transform.Rotate(Vector3.up,0.0f);
-
+        Vector3 target = direction;
+        direction.z = 0;
+        direction.x = desireLane*3;
+        direction.z = target.z;
         //Jump code
         direction.y += gravity * Time.deltaTime;
         if (controller.isGrounded)
@@ -109,6 +125,30 @@ public class PlayerController : MonoBehaviour
         direction.y = jumpForce;
         anim.SetTrigger("JumpTrigger");       
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            //Debug.Log("Collided" + other.transform.parent.name);
+
+            currentScore += 1;
+            SoundManager.sound.coinSource.PlayOneShot(SoundManager.sound.coinSound);
+            Destroy(other.gameObject);
+
+        }
+    }
+    //void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    Debug.Log("Collided");
+    //    if (hit.gameObject.tag == "Coin")
+    //    {
+    //        Debug.Log("Collided");
+
+    //        currentScore += 1;
+    //        SoundManager.sound.coinSource.PlayOneShot(SoundManager.sound.coinSound);
+    //        Destroy(hit.gameObject);
+    //    }    }
 
     //Slider Function
     IEnumerator Slider()
