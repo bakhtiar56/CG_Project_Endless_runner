@@ -361,6 +361,8 @@
 "Assets/ModelAnimations/Supercyan Character Pack Free Sample/Scripts/SimpleSampleCharacterControl.cs"
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/CoinRotate.cs"
+"Assets/Scripts/EventManager.cs"
+"Assets/Scripts/GameManager.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/SoundManager.cs"
 "Assets/Scripts/TileManager.cs"

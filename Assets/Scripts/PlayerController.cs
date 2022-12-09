@@ -7,12 +7,14 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector3 direction;
     public float forwardSpeed;
+    public Collider col;
     public float maxSpeed;
+    private bool isCollide=true;
 
     //Move Left Right 
     private int desireLane = 0; //Default is -2, 1 is left, -4 is right
     public float laneDistance = 3; 
-    public float laneSpeed = 100;
+    public float laneSpeed =2 ;
 
     //Jump code
     public Animator anim;
@@ -27,8 +29,19 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         direction.z = -forwardSpeed;
+        Time.timeScale = 1;
+        col= GetComponent<Collider>();
+        currentScore = 0;
+        laneSpeed = 3;
 
-        
+
+
+    }
+    private void afterSlide()
+    {
+        controller.detectCollisions = true;
+        laneSpeed = 2;
+        isCollide = true;
     }
 
     void Update()
@@ -88,12 +101,12 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        Vector3 targetPosition = transform.position;
-         targetPosition.x = desireLane;
-        Vector3 target = direction;
-        direction.z = 0;
-        direction.x = desireLane*3;
-        direction.z = target.z;
+        //Vector3 targetPosition = transform.position;
+        // targetPosition.x = desireLane;
+        //Vector3 target = direction;
+        //direction.z = 0;
+        //direction.x = desireLane*3;
+        //direction.z = target.z;
         //Jump code
         direction.y += gravity * Time.deltaTime;
         if (controller.isGrounded)
@@ -108,7 +121,19 @@ public class PlayerController : MonoBehaviour
         //Slider Input
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            isCollide = false;
+            Invoke(nameof(afterSlide), 1.5f);
+
+            controller.detectCollisions = false;
+            //col.enabled = !col.enabled;
+            laneSpeed = 0;
+
             StartCoroutine(Slider());
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            //controller.detectCollisions = false;
+
         }
 
 
@@ -117,6 +142,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        direction.x = Input.GetAxis("Horizontal")*laneSpeed;
         controller.Move(direction*Time.fixedDeltaTime);
     }
 
@@ -157,13 +183,23 @@ public class PlayerController : MonoBehaviour
         //controller.height = 1;
         //controller.center = new Vector3(0, -1f, 0);
         yield return new WaitForSeconds(2f);
+        
         //controller.height = 2;
         //controller.center = new Vector3(0, -1, 0);
+
         if (forwardSpeed < maxSpeed)
         {
-            forwardSpeed += 0.2f * Time.deltaTime;
+            forwardSpeed -= 0.5f * Time.deltaTime;
         }
 
+    }
+    //game over function
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.transform.CompareTag("obstacle") && isCollide)
+        {
+            GameManager.gameOver = true;
+        }
     }
 
 
