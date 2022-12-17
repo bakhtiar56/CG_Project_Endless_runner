@@ -200,6 +200,10 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.gameOver = true;
         }
+        else if (hit.transform.CompareTag("Sphere"))
+        {
+            GameManager.gameOver = true;
+        }
     }
 
 

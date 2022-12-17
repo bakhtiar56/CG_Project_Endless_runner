@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 4396552354244109273}
   m_Layer: 0
   m_Name: spikysmooth_ballfinal (1)
-  m_TagString: obstacle
+  m_TagString: Sphere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -603,7 +603,7 @@ GameObject:
   - component: {fileID: 5823363687658556601}
   m_Layer: 0
   m_Name: spikysmooth_ballfinal
-  m_TagString: obstacle
+  m_TagString: Sphere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
